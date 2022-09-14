@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <!-- start of your code -->
+        <div id="app">
+         
+            <p> Pick a number between 1 to 10.</p>
+            <p> You have {{times}} chance(s) left.</p>
+            
+            <input type="text" v-model="guess"> <input type="button" value="Submit" v-on:click="guessNumber()">
+            
+            <h3>{{message}}</h3>
+            
+            <p v-show="playagain" v-on:click="playAgain()">Play Again</p>
+        </div>
+        <!-- end of your code -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+        <script>
+          
+  var app = new Vue({
+  /* start of your code */
+  el: "#app",
+  data: {
+      times: 4,
+      random: 0,
+      guess: "",
+      message: "",
+      playagain: false,
+  },
+  created: function() {
+      this.random = Math.floor(Math.random() * 11)
+  },
+  methods: {
+      playAgain: function() {
+        this.times = 4
+        this.random = Math.floor(Math.random() * 11)
+        this.guess = ""
+        this.message = ""
+        this.playagain = false
+    },
+    guessNumber: function() {
+        if(this.guess == "") {
+            this.message = "No guess is made."
+        }
+        else if(isNaN(this.guess)) {
+            this.message = "Invalid input."
+        }
+        else {
+            if(this.times > 0) {
+                if(this.guess > this.random) {
+                   
+                    this.times -= 1
+                     if(this.times == 0){
+                         this.message = "Your lose. My secret number is " + this.random + "."
+                    }else{
+                        this.message = "Your guess," + this.guess + ",is too big"
+                    }
+                }
+                else if(this.guess < this.random) {
+                    this.times -= 1
+                    if(this.times == 0){
+                         this.message = "Your lose. My secret number is " + this.random + "."
+                    }else{
+                         this.message = "Your guess," + this.guess + ",is too small"
+                    }
+                 
+                }
+                else {
+                    this.message = "Bingo! My secret number is " + this.guess + "."
+                    this.playagain = true
+                }
+            }
+
+            if(this.times == 0){
+                this.playagain = true
+            }
+      }
+    }
+  
+  }
+  /* end of your code */
+});
+
+
+        </script>
+    </body>
+</html>
